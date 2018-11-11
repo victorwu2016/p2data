@@ -75,7 +75,7 @@ def index():
     df_category = df.copy()
     df_category = df_category.drop(['id','message','original','genre'], axis=1)
     category_sums = df_category.sum()
-    category_names = list(category_sums)
+    category_names = list(category_sums.index)
     
     graphs = [
         {
