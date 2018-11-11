@@ -24,7 +24,16 @@ from sklearn.pipeline import Pipeline
 
 
 def load_data(database_filepath):
-    # load data from database
+    """
+    Load data from database
+    
+    Parameters:
+        database_filepath: the filepath of database wich data stored.
+    Return
+        X: feature variables.
+        Y: target variables.
+        category_names: category name list
+    """
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('CleanMessage', engine)
     
@@ -36,6 +45,14 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Process your text data with a tokenization way
+    
+    Parameters:
+        text: text need to be tokenized.
+    Return
+        clean_tokens: word list.
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -48,6 +65,14 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Build a machine learning pipeline.
+    
+    Parameters:
+        na
+    Return
+        cv: GridSearchCV with multi output classifier.
+    """
     pipeline = Pipeline([
          ('vect', CountVectorizer(tokenizer=tokenize)),
          ('tfidf', TfidfTransformer()),
@@ -64,6 +89,17 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Evaluate a machine learning argorithm.
+    
+    Parameters:
+        model: a model
+        X_test: training target variables.
+        Y_test: testing target varirables.
+        categories_names: catgory name list
+    Return
+        na
+    """
     y_pred = model.predict(X_test)
     i=0
 
@@ -74,6 +110,15 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    save a machine learning model.
+    
+    Parameters:
+        model: a model
+        model_filepath: a file path need to be saved.
+    Return
+        na
+    """
     with open(model_filepath, 'wb') as f:
         pickle.dump(model, f)
 

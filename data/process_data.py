@@ -5,6 +5,15 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    load datasets.
+    
+    Parameters:
+        messages_filepath(string): the filepath of the messages.
+        categories_filepath(string): the filepath of categories.
+    Return
+        dataset which merge the messages and catgories.
+    """
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
     # load categories dataset
@@ -36,6 +45,14 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Remove duplicates to clean data.
+    
+    Parameters:
+        df(dataframe): datasets.
+    Return
+        dataset which has been removed the duplicates.
+    """
     # drop duplicates
     df.drop_duplicates(keep='first',inplace=True)
     
@@ -43,7 +60,15 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    #Save the clean dataset into an sqlite database
+    """
+    Save the clean dataset into an sqlite database
+    
+    Parameters:
+        df(dataframe): datasets.
+        database_filename: the filename data stored
+    Return
+        na
+    """
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('CleanMessage', engine, index=False)  
 
