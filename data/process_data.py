@@ -70,7 +70,7 @@ def save_data(df, database_filename):
         na
     """
     engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql('CleanMessage', engine, index=False)  
+    df.to_sql('CleanMessage', engine, index=False,if_exists='replacd',chunksize=600)  
 
 
 def main():

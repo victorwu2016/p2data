@@ -40,31 +40,66 @@ def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
+    # genre_counts = df.groupby('genre').count()['message']
+    # genre_names = list(genre_counts.index)
     
+ 
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
+    # graphs = [
+    #    {
+    #       'data': [
+    #            Bar(
+    #                x=genre_names,
+    #                y=genre_counts
+    #            )
+    #        ],
+
+    #        'layout': {
+    #            'title': 'Distribution of Message Genres',
+    #            'yaxis': {
+    #                'title': "Count"
+    #            },
+    #            'xaxis': {
+    #                'title': "Genre"
+    #            }
+    #        }
+    #    }
+    #]
+    # encode plotly graphs in JSON
+    #ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
+    #graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+    
+        
+    # extract data to count list by categories
+    df_category = df.copy()
+    df_category = df_category.drop(['id','message','original','genre'], axis=1)
+    category_sums = df_category.sum()
+    category_names = list(category_sums)
+    
     graphs = [
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    x=category_names,
+                    y=category_sums
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': ' Count of Messages by Category,',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Category"
                 }
             }
         }
     ]
+
+
+    
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
